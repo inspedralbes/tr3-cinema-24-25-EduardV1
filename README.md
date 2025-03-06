@@ -8,7 +8,7 @@ Un cop comenceu heu de canviar aquesta explicació amb la corresponent al vostre
 
 # Aquest fitxer ha de contenir com a mínim:
  * Nom dels integrants: Eduard Vilaseca Vilà
- * Nom del projecte: 🎞 MovieTick
+ * Nom del projecte: 🎞 MoviieTick
  * Petita descripció: Aplicació Web per a Gestió d'Entrades de Cinema
  * Adreça del gestor de tasques (taiga, jira, trello...): 
  * Adreça del prototip gràfic del projecte (Penpot, figma, moqups...)

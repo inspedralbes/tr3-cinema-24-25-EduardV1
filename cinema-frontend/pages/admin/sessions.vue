@@ -210,7 +210,7 @@
   // Format date function
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString('en-US', options);
+    return new Date(dateString).toLocaleDateString('es-ES', options);
   };
   
   // Search for movies using OMDB API

@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt'
   ],
+  ssr: false,
   css: ['~/assets/css/main.css'],
   app: {
     head: {

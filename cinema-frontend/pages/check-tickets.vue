@@ -1,25 +1,25 @@
 <template>
     <div>
-      <h1 class="text-3xl font-bold mb-6">Check Your Tickets</h1>
+      <h1 class="text-3xl font-bold mb-6">Comprova les teves entrades</h1>
       
       <div v-if="!userEmail" class="bg-white p-6 rounded-lg shadow-md mb-8">
-        <h2 class="text-xl font-bold mb-4">Enter Your Email</h2>
+        <h2 class="text-xl font-bold mb-4">Introdueix el teu correu electrònic</h2>
         <form @submit.prevent="checkTickets" class="flex flex-col md:flex-row gap-4">
           <input 
             type="email" 
             v-model="emailInput" 
-            placeholder="Your email address" 
+            placeholder="El teu coorreu electrònic" 
             required
             class="flex-grow px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
           >
-          <button type="submit" class="btn btn-primary">Check Tickets</button>
+          <button type="submit" class="btn btn-primary">Comprovar entrades</button>
         </form>
       </div>
       
       <div v-else>
         <div class="flex justify-between items-center mb-6">
-          <h2 class="text-xl font-bold">Tickets for {{ userEmail }}</h2>
-          <button @click="resetSearch" class="text-primary hover:underline">Search with another email</button>
+          <h2 class="text-xl font-bold">Entrades per a {{ userEmail }}</h2>
+          <button @click="resetSearch" class="text-primary hover:underline">Cercar amb un altre correu</button>
         </div>
         
         <div v-if="userTickets.length > 0">
@@ -30,18 +30,18 @@
               </div>
               <div class="md:w-3/4">
                 <h3 class="text-xl font-bold mb-2">{{ sessionTickets.session.movie.title }}</h3>
-                <p class="mb-2"><span class="font-semibold">Date:</span> {{ formatDate(sessionTickets.session.date) }}</p>
-                <p class="mb-2"><span class="font-semibold">Time:</span> {{ sessionTickets.session.time }}</p>
-                <p class="mb-4"><span class="font-semibold">Seats:</span> {{ formatSeats(sessionTickets.tickets) }}</p>
+                <p class="mb-2"><span class="font-semibold">Data:</span> {{ formatDate(sessionTickets.session.date) }}</p>
+                <p class="mb-2"><span class="font-semibold">Hora:</span> {{ sessionTickets.session.time }}</p>
+                <p class="mb-4"><span class="font-semibold">Seients:</span> {{ formatSeats(sessionTickets.tickets) }}</p>
                 
                 <div class="bg-gray-100 p-4 rounded-md mb-4">
-                  <h4 class="font-semibold mb-2">Ticket Details</h4>
+                  <h4 class="font-semibold mb-2">Detalls de l'entrada</h4>
                   <table class="w-full">
                     <thead>
                       <tr class="border-b">
-                        <th class="text-left py-2">Seat</th>
-                        <th class="text-left py-2">Type</th>
-                        <th class="text-right py-2">Price</th>
+                        <th class="text-left py-2">Seient</th>
+                        <th class="text-left py-2">Tipus</th>
+                        <th class="text-right py-2">Preu</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -59,7 +59,7 @@
                 </div>
                 
                 <div class="flex justify-end">
-                  <button class="btn btn-primary">Download Tickets</button>
+                  <button class="btn btn-primary">Descarregar entrades</button>
                 </div>
               </div>
             </div>
@@ -67,7 +67,7 @@
         </div>
         
         <div v-else class="bg-gray-100 p-6 rounded-lg text-center">
-          <p class="text-lg">No tickets found for this email address.</p>
+          <p class="text-lg">No s'han trobat entrades per a aquest correu electrònic.</p>
         </div>
       </div>
     </div>
@@ -95,7 +95,7 @@
               title: 'Inception',
               director: 'Christopher Nolan',
               year: '2010',
-              plot: 'A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.',
+              plot: 'Un lladre que roba secrets corporatius mitjançant la tecnologia de compartir somnis rep la tasca inversa de plantar una idea a la ment d’un director executiu.',
               poster: 'https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg'
             }
           },

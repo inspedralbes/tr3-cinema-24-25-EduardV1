@@ -1,12 +1,12 @@
 <template>
     <div>
-      <h1 class="text-3xl font-bold mb-6">Reports</h1>
+      <h1 class="text-3xl font-bold mb-6">Informes</h1>
       
       <div class="bg-white p-6 rounded-lg shadow-md mb-8">
-        <h2 class="text-xl font-bold mb-4">Session Occupancy and Collection</h2>
+        <h2 class="text-xl font-bold mb-4">Ocupació i Recaudació de les Sessions</h2>
         
         <div class="mb-6">
-          <label for="reportDate" class="block mb-2">Select Date</label>
+          <label for="reportDate" class="block mb-2">Selecciona una data</label>
           <div class="flex gap-2">
             <input 
               type="date" 
@@ -14,25 +14,25 @@
               v-model="selectedDate" 
               class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
             >
-            <button @click="generateReport" class="btn btn-primary">Generate Report</button>
+            <button @click="generateReport" class="btn btn-primary">Genera Informe</button>
           </div>
         </div>
         
         <div v-if="report" class="space-y-6">
           <div>
-            <h3 class="text-lg font-semibold mb-2">Session Details</h3>
+            <h3 class="text-lg font-semibold mb-2">Detalls de la Sessió</h3>
             <div class="bg-gray-100 p-4 rounded-md">
-              <p><span class="font-semibold">Movie:</span> {{ report.session.movie.title }}</p>
-              <p><span class="font-semibold">Date:</span> {{ formatDate(report.session.date) }}</p>
-              <p><span class="font-semibold">Time:</span> {{ report.session.time }}</p>
-              <p><span class="font-semibold">Special Day:</span> {{ report.session.isSpecialDay ? 'Yes' : 'No' }}</p>
+              <p><span class="font-semibold">Pel·lícula:</span> {{ report.session.movie.title }}</p>
+              <p><span class="font-semibold">Data:</span> {{ formatDate(report.session.date) }}</p>
+              <p><span class="font-semibold">Hora:</span> {{ report.session.time }}</p>
+              <p><span class="font-semibold">Dia especial:</span> {{ report.session.isSpecialDay ? 'Yes' : 'No' }}</p>
             </div>
           </div>
           
           <div>
-            <h3 class="text-lg font-semibold mb-2">Seat Occupancy</h3>
+            <h3 class="text-lg font-semibold mb-2">Ocupació de les butaques</h3>
             <div class="mb-4">
-              <div class="w-full bg-gray-800 text-white text-center py-2 mb-6 rounded">SCREEN</div>
+              <div class="w-full bg-gray-800 text-white text-center py-2 mb-6 rounded">PANTALLA</div>
               
               <div class="flex justify-center mb-6">
                 <div class="flex flex-col items-center">
@@ -55,11 +55,11 @@
               <div class="flex justify-center space-x-6">
                 <div class="flex items-center">
                   <div class="seat-available seat w-6 h-6 mr-2"></div>
-                  <span>Available</span>
+                  <span>Disponible</span>
                 </div>
                 <div class="flex items-center">
                   <div class="seat-occupied seat w-6 h-6 mr-2"></div>
-                  <span>Occupied</span>
+                  <span>Ocupat</span>
                 </div>
                 <div class="flex items-center">
                   <div class="seat-available seat seat-vip w-6 h-6 mr-2"></div>
@@ -70,15 +70,15 @@
           </div>
           
           <div>
-            <h3 class="text-lg font-semibold mb-2">Collection Report</h3>
+            <h3 class="text-lg font-semibold mb-2">Informe de Recaudació</h3>
             <div class="overflow-x-auto">
               <table class="w-full">
                 <thead>
                   <tr class="bg-gray-100">
-                    <th class="py-2 px-4 text-left">Ticket Type</th>
-                    <th class="py-2 px-4 text-right">Quantity</th>
-                    <th class="py-2 px-4 text-right">Price</th>
-                    <th class="py-2 px-4 text-right">Revenue</th>
+                    <th class="py-2 px-4 text-left">Tipus d'entrada</th>
+                    <th class="py-2 px-4 text-right">Quantitat</th>
+                    <th class="py-2 px-4 text-right">Preu</th>
+                    <th class="py-2 px-4 text-right">Ingressos</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -104,30 +104,30 @@
           </div>
           
           <div>
-            <h3 class="text-lg font-semibold mb-2">Occupancy Statistics</h3>
+            <h3 class="text-lg font-semibold mb-2">Estadístiques d'Ocupació</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div class="bg-gray-100 p-4 rounded-md">
-                <p class="font-semibold">Total Seats</p>
+                <p class="font-semibold">Total de butaques</p>
                 <p class="text-2xl">120</p>
               </div>
               <div class="bg-gray-100 p-4 rounded-md">
-                <p class="font-semibold">Occupied Seats</p>
+                <p class="font-semibold">Butaques ocupades</p>
                 <p class="text-2xl">{{ report.occupiedSeats }}</p>
               </div>
               <div class="bg-gray-100 p-4 rounded-md">
-                <p class="font-semibold">Occupancy Rate</p>
+                <p class="font-semibold">Percentatge d'ocupació</p>
                 <p class="text-2xl">{{ report.occupancyRate }}%</p>
               </div>
             </div>
           </div>
           
           <div class="flex justify-end">
-            <button class="btn btn-primary">Export Report</button>
+            <button class="btn btn-primary">Exporta l'informe</button>
           </div>
         </div>
         
         <div v-else-if="reportGenerated" class="bg-gray-100 p-6 rounded-lg text-center">
-          <p class="text-lg">No session found for the selected date.</p>
+          <p class="text-lg">o s'ha trobat cap sessió per a la data seleccionada.</p>
         </div>
       </div>
     </div>

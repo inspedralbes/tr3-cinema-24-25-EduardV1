@@ -2,7 +2,7 @@
     <div v-if="session">
       <div class="mb-8">
         <NuxtLink to="/sessions" class="text-primary hover:underline mb-4 inline-block">
-          &larr; Back to Sessions
+          &larr; Tornar a Sessions
         </NuxtLink>
         <h1 class="text-3xl font-bold mb-2">{{ session.movie.title }}</h1>
         <p class="text-gray-600 mb-6">{{ formatDate(session.date) }} at {{ session.time }}</p>
@@ -14,24 +14,24 @@
         </div>
         <div class="md:col-span-2">
           <div class="bg-white p-6 rounded-lg shadow-md mb-6">
-            <h2 class="text-xl font-bold mb-4">Movie Details</h2>
+            <h2 class="text-xl font-bold mb-4">Detalls de la pe·lícula</h2>
             <p class="mb-2"><span class="font-semibold">Director:</span> {{ session.movie.director }}</p>
-            <p class="mb-2"><span class="font-semibold">Year:</span> {{ session.movie.year }}</p>
-            <p class="mb-2"><span class="font-semibold">Plot:</span> {{ session.movie.plot }}</p>
+            <p class="mb-2"><span class="font-semibold">Any:</span> {{ session.movie.year }}</p>
+            <p class="mb-2"><span class="font-semibold">Sinposi:</span> {{ session.movie.plot }}</p>
             <div class="mt-4">
-              <p class="font-semibold mb-2">Ticket Prices:</p>
+              <p class="font-semibold mb-2">Preus de les entrades:</p>
               <p>Normal: {{ session.isSpecialDay ? '€4' : '€6' }}</p>
-              <p>VIP (Row F): {{ session.isSpecialDay ? '€6' : '€8' }}</p>
+              <p>VIP (Fila F): {{ session.isSpecialDay ? '€6' : '€8' }}</p>
             </div>
           </div>
         </div>
       </div>
   
       <div class="bg-white p-6 rounded-lg shadow-md mb-8">
-        <h2 class="text-xl font-bold mb-6">Select Your Seats</h2>
+        <h2 class="text-xl font-bold mb-6">Selecciona els teus seients</h2>
         
         <div class="mb-8">
-          <div class="w-full bg-gray-800 text-white text-center py-2 mb-6 rounded">SCREEN</div>
+          <div class="w-full bg-gray-800 text-white text-center py-2 mb-6 rounded">PANTALLA</div>
           
           <div class="flex justify-center mb-6">
             <div class="flex flex-col items-center">
@@ -55,15 +55,15 @@
           <div class="flex justify-center space-x-6 mb-4">
             <div class="flex items-center">
               <div class="seat-available seat w-6 h-6 mr-2"></div>
-              <span>Available</span>
+              <span>Disponible</span>
             </div>
             <div class="flex items-center">
               <div class="seat-occupied seat w-6 h-6 mr-2"></div>
-              <span>Occupied</span>
+              <span>Ocupat</span>
             </div>
             <div class="flex items-center">
               <div class="seat-selected seat w-6 h-6 mr-2"></div>
-              <span>Selected</span>
+              <span>Seleccionat</span>
             </div>
             <div class="flex items-center">
               <div class="seat-available seat seat-vip w-6 h-6 mr-2"></div>
@@ -72,16 +72,16 @@
           </div>
           
           <div class="text-center">
-            <p class="mb-2">Selected seats: {{ selectedSeats.length }}/10</p>
+            <p class="mb-2">Seients seleccionats: {{ selectedSeats.length }}/10</p>
             <p class="font-semibold">Total: €{{ calculateTotal() }}</p>
           </div>
         </div>
         
         <div v-if="selectedSeats.length > 0">
-          <h3 class="text-lg font-bold mb-4">Your Information</h3>
+          <h3 class="text-lg font-bold mb-4">Les teves dades:</h3>
           <form @submit.prevent="submitPurchase" class="space-y-4">
             <div>
-              <label for="name" class="block mb-1">Name</label>
+              <label for="name" class="block mb-1">Nom</label>
               <input 
                 type="text" 
                 id="name" 
@@ -91,7 +91,7 @@
               >
             </div>
             <div>
-              <label for="surname" class="block mb-1">Surname</label>
+              <label for="surname" class="block mb-1">Cognom</label>
               <input 
                 type="text" 
                 id="surname" 
@@ -101,7 +101,7 @@
               >
             </div>
             <div>
-              <label for="email" class="block mb-1">Email</label>
+              <label for="email" class="block mb-1">Correu electrònic</label>
               <input 
                 type="email" 
                 id="email" 
@@ -111,7 +111,7 @@
               >
             </div>
             <div>
-              <label for="phone" class="block mb-1">Phone Number</label>
+              <label for="phone" class="block mb-1">Telèfon</label>
               <input 
                 type="tel" 
                 id="phone" 
@@ -121,14 +121,14 @@
               >
             </div>
             <div class="flex justify-end">
-              <button type="submit" class="btn btn-primary">Confirm Purchase</button>
+              <button type="submit" class="btn btn-primary">Confirmar compra</button>
             </div>
           </form>
         </div>
       </div>
     </div>
     <div v-else class="text-center py-12">
-      <p class="text-xl">Loading session information...</p>
+      <p class="text-xl">Carregant l'informació de la sessió...</p>
     </div>
   </template>
   
@@ -229,7 +229,7 @@
     });
     
     // Redirect to confirmation page (in a real app)
-    alert('Purchase successful! You would be redirected to a confirmation page.');
+    alert('Compra realitzada amb èxit! Seràs redirigit a la pàgina de confirmació.');
   };
   
   // Format date function

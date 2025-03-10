@@ -1,22 +1,22 @@
 <template>
     <div>
       <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold">Session Management</h1>
-        <button @click="showCreateModal = true" class="btn btn-primary">Create New Session</button>
+        <h1 class="text-3xl font-bold">Gestió de Sessions</h1>
+        <button @click="showCreateModal = true" class="btn btn-primary">Crear Nova Sessió</button>
       </div>
       
       <div class="bg-white p-6 rounded-lg shadow-md mb-8">
-        <h2 class="text-xl font-bold mb-4">Upcoming Sessions</h2>
+        <h2 class="text-xl font-bold mb-4">Properes Sessions</h2>
         
         <div class="overflow-x-auto">
           <table class="w-full">
             <thead>
               <tr class="bg-gray-100">
-                <th class="py-2 px-4 text-left">Date</th>
-                <th class="py-2 px-4 text-left">Time</th>
-                <th class="py-2 px-4 text-left">Movie</th>
-                <th class="py-2 px-4 text-left">Special Day</th>
-                <th class="py-2 px-4 text-left">Actions</th>
+                <th class="py-2 px-4 text-left">Data</th>
+                <th class="py-2 px-4 text-left">Hora</th>
+                <th class="py-2 px-4 text-left">Pel·lícula</th>
+                <th class="py-2 px-4 text-left">Dia Especial</th>
+                <th class="py-2 px-4 text-left">Accions</th>
               </tr>
             </thead>
             <tbody>
@@ -25,12 +25,12 @@
                 <td class="py-2 px-4">{{ session.time }}</td>
                 <td class="py-2 px-4">{{ session.movie.title }}</td>
                 <td class="py-2 px-4">
-                  <span v-if="session.isSpecialDay" class="text-accent font-semibold">Yes</span>
+                  <span v-if="session.isSpecialDay" class="text-accent font-semibold">Sí</span>
                   <span v-else>No</span>
                 </td>
                 <td class="py-2 px-4">
-                  <button @click="editSession(session)" class="text-primary hover:underline mr-2">Edit</button>
-                  <button @click="deleteSession(session.id)" class="text-secondary hover:underline">Delete</button>
+                  <button @click="editSession(session)" class="text-primary hover:underline mr-2">Editar</button>
+                  <button @click="deleteSession(session.id)" class="text-secondary hover:underline">Esborrar</button>
                 </td>
               </tr>
             </tbody>
@@ -41,12 +41,12 @@
       <!-- Create/Edit Session Modal -->
       <div v-if="showCreateModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
         <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-2xl">
-          <h2 class="text-2xl font-bold mb-4">{{ editingSession ? 'Edit Session' : 'Create New Session' }}</h2>
+          <h2 class="text-2xl font-bold mb-4">{{ editingSession ? 'Editar Sessió' : 'Crear Nova Sessió' }}</h2>
           
           <form @submit.prevent="saveSession" class="space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label for="date" class="block mb-1">Date</label>
+                <label for="date" class="block mb-1">Data</label>
                 <input 
                   type="date" 
                   id="date" 
@@ -57,7 +57,7 @@
               </div>
               
               <div>
-                <label for="time" class="block mb-1">Time</label>
+                <label for="time" class="block mb-1">Hora</label>
                 <select 
                   id="time" 
                   v-model="sessionForm.time" 
@@ -72,13 +72,13 @@
             </div>
             
             <div>
-              <label for="movieSearch" class="block mb-1">Search Movie (OMDB)</label>
+              <label for="movieSearch" class="block mb-1">Cercar Pel·lícula (OMDB)</label>
               <div class="flex gap-2">
                 <input 
                   type="text" 
                   id="movieSearch" 
                   v-model="movieSearch" 
-                  placeholder="Enter movie title"
+                  placeholder="Introdueix el títol de la pel·lícula"
                   class="flex-grow px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                 <button 
@@ -107,7 +107,7 @@
             </div>
             
             <div v-if="sessionForm.movie.title" class="bg-gray-100 p-4 rounded-md">
-              <h3 class="font-semibold mb-2">Selected Movie</h3>
+              <h3 class="font-semibold mb-2">Pel·lícula Seleccionada</h3>
               <div class="flex gap-4">
                 <img :src="sessionForm.movie.poster" :alt="sessionForm.movie.title" class="w-20 h-28 object-cover rounded">
                 <div>
@@ -125,7 +125,7 @@
                 v-model="sessionForm.isSpecialDay"
                 class="mr-2"
               >
-              <label for="isSpecialDay">Special Day (Reduced Prices)</label>
+              <label for="isSpecialDay">Dia Especial (Preus Reduïts)</label>
             </div>
             
             <div class="flex items-center">
@@ -135,12 +135,12 @@
                 v-model="sessionForm.enableVIP"
                 class="mr-2"
               >
-              <label for="enableVIP">Enable VIP Row (Row F)</label>
+              <label for="enableVIP">Activar Fila VIP (Fila F)</label>
             </div>
             
             <div class="flex justify-end gap-2">
               <button type="button" @click="showCreateModal = false" class="btn bg-gray-300 hover:bg-gray-400">Cancel</button>
-              <button type="submit" class="btn btn-primary">Save Session</button>
+              <button type="submit" class="btn btn-primary">Guardar Session</button>
             </div>
           </form>
         </div>

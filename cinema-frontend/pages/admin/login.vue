@@ -1,11 +1,11 @@
 <template>
     <div class="flex justify-center items-center min-h-[70vh]">
       <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h1 class="text-2xl font-bold mb-6 text-center">Admin Login</h1>
+        <h1 class="text-2xl font-bold mb-6 text-center">Inici de sessió d'Administrador</h1>
         
         <form @submit.prevent="login" class="space-y-4">
           <div>
-            <label for="password" class="block mb-1">Password</label>
+            <label for="password" class="block mb-1">Contrasenya</label>
             <input 
               type="password" 
               id="password" 
@@ -20,7 +20,7 @@
           </div>
           
           <div class="flex justify-end">
-            <button type="submit" class="btn btn-primary">Login</button>
+            <button type="submit" class="btn btn-primary">Inicia Sessió</button>
           </div>
         </form>
       </div>
@@ -37,7 +37,7 @@
     if (authStore.login(password.value)) {
       router.push('/admin');
     } else {
-      error.value = 'Invalid password. Please try again.';
+      error.value = 'Contrasenya incorrecta. Torna-ho a provar.';
     }
   };
   </script>

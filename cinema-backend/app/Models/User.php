@@ -1,10 +1,11 @@
 <?php
-// app/Models/User.php
+
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Notifications\WelcomeNotification;
 
 class User extends Authenticatable
 {
@@ -14,6 +15,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_admin'
     ];
 
     protected $hidden = [
@@ -22,16 +24,12 @@ class User extends Authenticatable
     ];
 
     protected $casts = [
-        'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'is_admin' => 'boolean'
     ];
 
-    protected static function boot()
+    public function tickets()
     {
-        parent::boot();
-
-        static::created(function ($user) {
-            $user->notify(new WelcomeNotification());
-        });
+        return $this->hasMany(Ticket::class);
     }
 }

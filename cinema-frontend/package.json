@@ -1,5 +1,5 @@
 {
-  "name": "cinema-ticket-management",
+  "name": "cinema-frontend",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,10 +10,14 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@pinia/nuxt": "^0.10.1",
-    "nuxt": "^3.15.4",
-    "vue": "^3.5.13",
-    "vue-router": "^4.5.0"
+    "nuxt": "^3.13.0",
+    "@pinia/nuxt": "^0.5.1",
+    "pinia": "^2.1.7",
+    "axios": "^1.6.7",
+    "@vueuse/core": "^10.9.0",
+    "@headlessui/vue": "^1.7.19",
+    "date-fns": "^2.30.0",
+    "date-fns-tz": "^2.0.0"
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.11.4",

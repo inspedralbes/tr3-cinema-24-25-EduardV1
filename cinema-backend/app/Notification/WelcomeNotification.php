@@ -18,16 +18,16 @@ class WelcomeNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Welcome to MovieTick!')
-            ->greeting('Hello ' . $notifiable->name . '!')
-            ->line('Welcome to MovieTick - your gateway to amazing cinema experiences!')
-            ->line('We\'re thrilled to have you join our community of movie enthusiasts.')
-            ->line('With MovieTick, you can:')
-            ->line('• Book tickets for the latest movies')
-            ->line('• Choose your preferred seats')
-            ->line('• Get special discounts on movie days')
-            ->line('• Manage your bookings easily')
-            ->action('Start Exploring Movies', url('/'))
-            ->line('Thank you for choosing MovieTick. Get ready for an incredible cinema journey!');
+            ->subject('Benvingut a MoviieTick!')
+            ->greeting('Hola ' . $notifiable->name . '!')
+            ->line('Benvingut a MoviieTick - la teva porta d\'entrada a experiències de cinema increïbles!')
+            ->line('Estem encantats que t\'uneixis a la nostra comunitat d\'entusiastes de cinema.')
+            ->line('Amb MoviieTick, pots:')
+            ->line('• Reservar entrades per a les últimes pel·lícules')
+            ->line('• Escollir els teus seients preferits')
+            ->line('• Aconseguir descomptes especials els dies de cinema')
+            ->line('• Gestionar fàcilment les teves reserves')
+            ->action('Comença a explorar pel·lícules', config('app.url'))
+            ->line('Gràcies per triar MoviieTick. Prepara\'t per a un viatge cinematogràfic increïble');
     }
 }

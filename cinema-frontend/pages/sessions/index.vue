@@ -1,15 +1,15 @@
 <template>
-  <div>
-    <h1 class="text-3xl font-bold mb-6">Sessions Properes</h1>
+  <div class="max-w-6xl mx-auto">
+    <h1 class="text-2xl font-bold mb-4">Sessions Properes</h1>
     
-    <div class="mb-8">
-      <div class="flex flex-wrap gap-2 mb-4">
+    <div class="mb-6">
+      <div class="flex flex-wrap gap-2 mb-3">
         <button 
           v-for="date in availableDates" 
           :key="date"
           @click="selectedDate = date"
           :class="[
-            'px-4 py-2 rounded-md',
+            'px-3 py-1 rounded-md text-sm',
             selectedDate === date ? 'bg-primary text-white' : 'bg-gray-200 hover:bg-gray-300'
           ]"
         >
@@ -18,29 +18,27 @@
       </div>
     </div>
     
-    <div v-if="filteredSessions.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div v-for="session in filteredSessions" :key="session.id" class="bg-white rounded-lg shadow-md overflow-hidden">
-        <img :src="session.movie.poster" :alt="session.movie.title" class="w-full h-64 object-cover">
-        <div class="p-4">
-          <h2 class="text-xl font-bold mb-2">{{ session.movie.title }}</h2>
-          <p class="text-gray-600 mb-2">{{ formatDate(session.date) }} a les {{ session.time }}</p>
-          <p v-if="session.isSpecialDay" class="text-accent font-semibold mb-2">Dia Especial!</p>
-          <p class="mb-4 line-clamp-3">{{ session.movie.plot }}</p>
+    <div v-if="filteredSessions.length > 0" class="grid grid-cols-3 gap-4">
+      <div v-for="session in filteredSessions" :key="session.id" class="bg-white rounded-lg shadow-sm overflow-hidden">
+        <img :src="session.movie.poster" :alt="session.movie.title" class="w-full h-40 object-cover">
+        <div class="p-3">
+          <h2 class="text-base font-bold mb-1">{{ session.movie.title }}</h2>
+          <p class="text-sm text-gray-600 mb-1">{{ formatDate(session.date) }} - {{ session.time }}</p>
+          <p v-if="session.isSpecialDay" class="text-accent text-sm font-semibold mb-1">Dia Especial!</p>
+          <p class="text-sm mb-2 line-clamp-2">{{ session.movie.plot }}</p>
           <div class="flex justify-between items-center">
-            <div>
-              <span class="font-semibold">Preu: </span>
-              <span>{{ session.isSpecialDay ? '4€' : '6€' }} (Normal)</span>
-              <br>
-              <span>{{ session.isSpecialDay ? '6€' : '8€' }} (VIP)</span>
+            <div class="text-sm">
+              <p>Normal: {{ session.isSpecialDay ? '4€' : '6€' }}</p>
+              <p>VIP: {{ session.isSpecialDay ? '6€' : '8€' }}</p>
             </div>
-            <NuxtLink :to="`/sessions/${session.id}`" class="btn btn-primary">Detalls</NuxtLink>
+            <NuxtLink :to="`/sessions/${session.id}`" class="btn btn-primary text-sm">Detalls</NuxtLink>
           </div>
         </div>
       </div>
     </div>
     
-    <div v-else class="bg-gray-100 p-6 rounded-lg text-center">
-      <p class="text-lg">No hi ha sessions disponibles per a la data seleccionada.</p>
+    <div v-else class="bg-gray-100 p-4 rounded-lg text-center">
+      <p>No hi ha sessions disponibles per a la data seleccionada.</p>
     </div>
   </div>
 </template>
@@ -50,7 +48,6 @@ import { useFormatDate } from '~/composables/useFormatDate';
 
 const { formatDate } = useFormatDate();
 
-// Mock data for sessions
 const sessions = ref([
   {
     id: 1,
@@ -93,15 +90,12 @@ const sessions = ref([
   }
 ]);
 
-// Get unique dates from sessions
 const availableDates = computed(() => {
   return [...new Set(sessions.value.map(session => session.date))];
 });
 
-// Default selected date to the first available date
 const selectedDate = ref(availableDates.value[0] || '');
 
-// Filter sessions by selected date
 const filteredSessions = computed(() => {
   return sessions.value.filter(session => session.date === selectedDate.value);
 });

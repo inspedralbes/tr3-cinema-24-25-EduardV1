@@ -141,6 +141,7 @@
 <script setup>
 const route = useRoute();
 const router = useRouter();
+const ticketsStore = useTicketsStore();
 const sessionId = parseInt(route.params.id);
 
 const session = ref({
@@ -213,6 +214,7 @@ const calculateTotal = () => {
 
 const submitPurchase = () => {
   const purchaseData = {
+    id: Math.random().toString(36).substr(2, 9),
     sessionId: session.value.id,
     session: {
       id: session.value.id,
@@ -222,15 +224,18 @@ const submitPurchase = () => {
     },
     seats: selectedSeats.value,
     userInfo: userInfo.value,
-    total: calculateTotal()
+    total: calculateTotal(),
+    purchaseDate: new Date().toISOString()
   };
+  
+  // Store in tickets store
+  ticketsStore.addPurchase(purchaseData);
   
   // Store purchase data in localStorage for the confirmation page
   localStorage.setItem('lastPurchase', JSON.stringify(purchaseData));
   
-  // Generate a mock purchase ID and redirect to confirmation page
-  const purchaseId = Math.random().toString(36).substr(2, 9);
-  router.push(`/confirmation/${purchaseId}`);
+  // Redirect to confirmation page
+  router.push(`/confirmation/${purchaseData.id}`);
 };
 
 const formatDate = (dateString) => {

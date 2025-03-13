@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-6xl mx-auto">
     <section class="mb-8">
-      <h1 class="text-3xl font-bold mb-4">Benvinguts al Cinema Pedralbes</h1>
+      <h1 class="text-3xl font-bold mb-4">Benvinguts a MoviieTick</h1>
       <p class="text-base mb-3">Gaudeix de la màgia del cinema amb les nostres projeccions diàries.</p>
       <NuxtLink to="/sessions" class="btn btn-primary">Veure Sessions Properes</NuxtLink>
     </section>

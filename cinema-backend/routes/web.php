@@ -1,15 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MovieController;
-use App\Http\Controllers\SessionController;
+use App\Http\Controllers\Admin\SessionController;
 
 Route::get('/', function () {
-    return redirect()->route('movies.index');
+    return view('welcome');
 });
 
-// Rutas para películas
-Route::resource('movies', MovieController::class);
+// Admin routes
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::resource('sessions', SessionController::class);
+    Route::get('movies/search', [SessionController::class, 'searchMovies'])->name('movies.search');
+});
 
-// Rutas para sesiones
-Route::resource('sessions', SessionController::class);
+require __DIR__.'/auth.php';

@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('movie_sessions', function (Blueprint $table) {
@@ -19,12 +16,12 @@ return new class extends Migration
             $table->boolean('is_special_day')->default(false);
             $table->boolean('enable_vip')->default(true);
             $table->timestamps();
+
+            // Add index for date to optimize session lookups
+            $table->index('date');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('movie_sessions');

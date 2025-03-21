@@ -17,7 +17,12 @@ return new class extends Migration
             $table->text('description');
             $table->string('poster_url')->nullable();
             $table->integer('duration');
+            $table->string('director');
+            $table->string('cast');
+            $table->string('time');
+            $table->float('score');
             $table->string('rating');
+            $table->string('trailer_url');
             $table->timestamps(); // timestamps (created_at, updated_at)
         });
     }

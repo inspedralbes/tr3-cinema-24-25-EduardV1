@@ -72,7 +72,7 @@
               <span class="ml-1">{{ movie.score }}/10</span>
             </div>
             <span class="mx-2">•</span>
-            <span>{{ movie.duration }}</span>
+            <span>{{ movie.duration }} Minuts</span>
             <span class="mx-2">•</span>
             <span>{{ movie.genre }}</span>
           </div>
@@ -83,23 +83,17 @@
               <span>{{ movie.director }}</span>
             </div>
             <div class="flex items-center">
-              <span class="text-gray-700 font-semibold w-24">Repartiment:</span>
+              <span class="text-gray-700 font-semibold w-24">Repartiment: </span>
               <span>{{ movie.cast }}</span>
-            </div>
-            <div class="flex items-center">
-              <span class="text-gray-700 font-semibold w-24">Estrena:</span>
-              <span>{{ movie.releaseDate }}</span>
             </div>
           </div>
           <div class="mt-6 space-y-3">
-            <h4 class="font-semibold text-gray-700">Horaris disponibles:</h4>
             <div class="grid grid-cols-3 gap-2">
-              <button v-for="time in movie.showTimes" :key="time" @click="openBookingModal(movie, time)"
-                class="bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 rounded-md text-sm transition">
-                {{ time }}
-              </button>
+              <span class="text-gray-700 font-semibold w-24">Horari:</span>
+              <span>{{ movie.time }}</span>
             </div>
           </div>
+          <br>
           <button @click="goToMovie(movie.id)" class="w-full bg-red-600 text-white px-3 py-1.5 rounded-md hover:bg-red-700 transition-colors text-sm">
             Reservar Entrades
           </button>

@@ -8,10 +8,16 @@ use Illuminate\Http\Request;
 
 class TicketController extends Controller
 {
+    public function getTickets($sessionId) {
+        $tickets = Ticket::where('movie_session_id', $sessionId)->get();
+        
+        return response()->json($tickets);
+    }
+    
     /**
      * Mostrar tots els tiquets.
      */
-    public function index()
+     public function index()
     {
         $tickets = Ticket::with('session')->get();
         return response()->json($tickets);

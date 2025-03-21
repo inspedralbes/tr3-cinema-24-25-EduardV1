@@ -11,13 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Schema::create('tickets', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->foreignId('movie_session_id')->constrained('movie_sessions')->onDelete('cascade');
+        //     $table->enum('type', ['normal', 'vip']);
+        //     $table->string('user_name');
+        //     $table->string('user_email');
+        //     $table->timestamps();
+        // });
+
         Schema::create('tickets', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('movie_session_id')->constrained('movie_sessions')->onDelete('cascade');
-            $table->enum('type', ['normal', 'vip']);
-            $table->string('user_name');
-            $table->string('user_email');
-            $table->timestamps();
+            $table->id(); // ID de l'entrada
+            $table->string('position'); // Posició de l'entrada
+            $table->boolean('available')->default(true); // Indica si l'entrada està disponible
+            $table->foreignId('movie_session_id')->constrained('movie_sessions')->onDelete('cascade');  
+            $table->timestamps(); // created_at i updated_at
         });
     }
 

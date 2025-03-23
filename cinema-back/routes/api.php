@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\MovieSessionController;
 use App\Http\Controllers\TicketController;
+use App\Models\Movie;
 
 // Rutes per a les pel·lícules
 Route::prefix('movies')->group(function () {
@@ -32,3 +33,6 @@ Route::prefix('tickets')->group(function () {
     Route::put('{id}', [TicketController::class, 'update']);       // Actualitzar un tiquet
     Route::delete('{id}', [TicketController::class, 'destroy']);   // Esborrar un tiquet
 });
+
+
+route::get('/movie_sessions/{id}/tickets', [MovieSessionController::class, 'getTickets']);

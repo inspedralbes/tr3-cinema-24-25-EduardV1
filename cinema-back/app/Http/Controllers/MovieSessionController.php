@@ -5,9 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\MovieSession;
 use App\Models\Movie;
 use Illuminate\Http\Request;
+use App\Models\Ticket;
 
 class MovieSessionController extends Controller
 {
+
+    public function getTickets($sessionId) {
+        $tickets = Ticket::where('movie_session_id', $sessionId)->get();
+        
+        return response()->json($tickets);
+    }
     /**
      * Mostrar totes les sessions de pel·lícules.
      */

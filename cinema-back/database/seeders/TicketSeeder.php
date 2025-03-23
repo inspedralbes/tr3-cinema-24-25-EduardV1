@@ -31,11 +31,16 @@ class TicketSeeder extends Seeder
                         $available = false;
                     }
 
+                    $type = str_starts_with($letter, 'F') ? 'vip' : 'normal';
+                    $price = $type === 'vip' ? 8 : 6;
+
                     // Inserir l'entrada a la taula tickets
                     DB::table('tickets')->insert([
                         'position' => $position,
                         'available' => $available, // Indicar si està comprada o no
                         'movie_session_id' => $movie_session->id, // Associem l'entrada amb la sessió de la pel·lícula
+                        'type' => $type,
+                        'price' => $price,
                     ]);
                 }
             }

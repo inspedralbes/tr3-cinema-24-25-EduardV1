@@ -100,7 +100,7 @@
 
         <div class="text-right mb-3">
           <p class="text-xs font-semibold">Seients seleccionats: {{ selectedSeats.join(', ') }}</p>
-          <p class="text-xs font-semibold">Total: {{ selectedSeats.length * 12 }}€</p>
+          <p class="text-xs font-semibold">Total: {{ calculateTotal() }}€</p>
         </div>
 
         <!-- Formulari de Detalls del Client -->
@@ -168,9 +168,25 @@ const booking = ref({ name: '', email: '' });
 const tickets = ref([]);
 const getSeatClass = (seatId) => {
   const ticket = tickets.value.find(ticket => ticket.position === seatId);
-  if (!ticket) return 'bg-gray-200'; // Seient no trobat
-  return ticket.available ? 'bg-gray-200 hover:bg-red-400' : 'bg-gray-500'; // Disponible o ocupat
+  if (!ticket) return 'bg-gray-200'; // Si no el troba, gris clar
+
+  if (!ticket.available) return 'bg-gray-500'; // Ocupat (gris fosc)
+
+  // Diferenciar seients VIP i Normals
+  return ticket.type === 'vip' ? 'bg-yellow-400 hover:bg-yellow-500' : 'bg-gray-200 hover:bg-red-400';
 };
+
+// Asegura't que el preu sigui un número (si ve com string, el convertim a número)
+const calculateTotal = () => {
+  return selectedSeats.value.reduce((total, seatId) => {
+    const ticket = tickets.value.find(ticket => ticket.position === seatId);
+    // Converteix el preu a número si és una cadena
+    return total + (ticket ? Number(ticket.price) : 0);
+  }, 0); // Inicialitzem el total a 0
+};
+
+
+
 
 const isSeatOccupied = (seatId) => {
   const ticket = tickets.value.find(ticket => ticket.position === seatId);
@@ -209,6 +225,9 @@ onMounted(() => {
 onMounted(fetchMovie);
 
 const toggleSeat = (seatId) => {
+  const ticket = tickets.value.find(ticket => ticket.position === seatId);
+  if (!ticket || !ticket.available) return; // No permet seleccionar si està ocupat
+
   const index = selectedSeats.value.indexOf(seatId);
   if (index === -1) {
     selectedSeats.value.push(seatId);
@@ -216,6 +235,7 @@ const toggleSeat = (seatId) => {
     selectedSeats.value.splice(index, 1);
   }
 };
+
 
 const submitBooking = async () => {
   try {

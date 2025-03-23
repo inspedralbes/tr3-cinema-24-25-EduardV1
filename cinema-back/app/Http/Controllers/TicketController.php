@@ -8,12 +8,7 @@ use Illuminate\Http\Request;
 
 class TicketController extends Controller
 {
-    public function getTickets($sessionId) {
-        $tickets = Ticket::where('movie_session_id', $sessionId)->get();
-        
-        return response()->json($tickets);
-    }
-    
+   
     /**
      * Mostrar tots els tiquets.
      */
@@ -29,20 +24,36 @@ class TicketController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'session_id' => 'required|exists:movie_sessions,id',
-            'user_name' => 'required|string|max:255',
-            'user_email' => 'required|email',
-            'seat_number' => 'required|string',
+            'movie_session_id' => 'required|exists:movie_session,id',
+            'positions' => 'required|array',
+            'customer_name' => 'required|string',
+            'customer_email' => 'required|email',
+            //'type' => 'required|in:normal,vip',
         ]);
 
-        $ticket = Ticket::create([
-            'session_id' => $request->session_id,
-            'user_name' => $request->user_name,
-            'user_email' => $request->user_email,
-            'seat_number' => $request->seat_number,
-        ]);
 
-        return response()->json($ticket, 201);
+        $createdTickets = [];
+        //$price = $request->type === 'vip' ? 8 : 6;
+
+        foreach ($request->positions as $position) {
+            $type = str_starts_with(strtoupper($position),'F') ? 'vip' : 'normal';
+            $price = $type === 'vip' ? 8.00 : 6.00;
+
+            $ticket =Ticket::create([
+                'movie_id' => $request->movie_id,
+                'posotions' => $position,
+                'available' => false,
+                'type' => $type,
+                'price' => $price,
+                'customer_name' => $request->customer['name'],
+                'customer_email' => $request->customer['email'],
+            ]);
+
+            $createdTickets[] = $ticket;
+        }
+
+        //return response()->json($ticket, 201);
+        return response() -> json(['message' => 'Reserva completada'],201);
     }
 
     /**

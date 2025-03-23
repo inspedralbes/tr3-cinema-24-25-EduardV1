@@ -24,6 +24,8 @@ return new class extends Migration
             $table->id(); // ID de l'entrada
             $table->string('position'); // Posició de l'entrada
             $table->boolean('available')->default(true); // Indica si l'entrada està disponible
+            $table->enum('type', ['normal', 'vip']);
+            $table->string('price',8,2)->default(6);
             $table->foreignId('movie_session_id')->constrained('movie_sessions')->onDelete('cascade');  
             $table->timestamps(); // created_at i updated_at
         });

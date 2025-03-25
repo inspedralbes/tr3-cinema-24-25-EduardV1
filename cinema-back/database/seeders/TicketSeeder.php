@@ -26,8 +26,8 @@ class TicketSeeder extends Seeder
                     // Generem un número aleatori per decidir si l'entrada es compra o no
                     $available = true;
                     
-                    // Simulem que el 30% de les entrades ja estan comprades
-                    if (rand(1, 10) <= 3) { // Aproximadament el 30% de les entrades seran comprades
+                    // Simulem que el 20% de les entrades ja estan comprades
+                    if (rand(1, 10) <= 2) { // Aproximadament el 30% de les entrades seran comprades
                         $available = false;
                     }
 

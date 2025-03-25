@@ -17,7 +17,7 @@
         <div>
           <h3 class="text-lg font-bold mb-4">Contacta'ns</h3>
           <p>Email: info@MoviieTick.com</p>
-          <p>Telèfon: (555) 123-4567</p>
+          <p>Telèfon: 664 565 564</p>
         </div>
       </div>
       <div class="mt-8 text-center border-t border-gray-700 pt-8">

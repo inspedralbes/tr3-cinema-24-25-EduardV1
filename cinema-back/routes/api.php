@@ -35,4 +35,9 @@ Route::prefix('tickets')->group(function () {
 });
 
 
+//obtenir entrades d'una sessió
 route::get('/movie_sessions/{id}/tickets', [MovieSessionController::class, 'getTickets']);
+
+//buytickets
+// Route::post('/movie_sessions/{id}/buytickets', [TicketController::class, 'buyTickets']);
+Route::post('/buytickets', [TicketController::class, 'buyTickets']);

@@ -158,7 +158,7 @@
           <p>Seients seleccionats: {{ reservedSeats.join(", ") }}</p>
           <p>Import total: {{ reservedTotal }}€</p>
         </div>
-        <button @click="showSuccessModal = false"
+        <button @click="closeSuccessModal"
           class="px-4 py-2 text-sm bg-red-600 text-white rounded-md hover:bg-red-700">
           Tancar
         </button>
@@ -185,6 +185,12 @@ const reservedTotal = ref(0);
 const rows = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
 const booking = ref({ name: "", email: "" });
 const tickets = ref([]);
+
+const closeSuccessModal = () => {
+  showSuccessModal.value = false; // Cierra el modal
+  window.location.reload(); // Recarga la página
+};
+
 const getSeatClass = (seatId) => {
   // Si el seient està seleccionat, retornem la classe de "seleccionat"
   if (selectedSeats.value.includes(seatId)) {

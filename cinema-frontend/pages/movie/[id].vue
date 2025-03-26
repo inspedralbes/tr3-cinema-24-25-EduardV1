@@ -55,7 +55,7 @@
               <span>Disponible</span>
             </div>
             <div class="flex items-center">
-              <div class="w-4 h-4 bg-red-500 rounded mr-1"></div>
+              <div class="w-4 h-4 bg-green-500 rounded mr-1"></div>
               <span>Seleccionat</span>
             </div>
             <div class="flex items-center">
@@ -194,7 +194,7 @@ const closeSuccessModal = () => {
 const getSeatClass = (seatId) => {
   // Si el seient està seleccionat, retornem la classe de "seleccionat"
   if (selectedSeats.value.includes(seatId)) {
-    return "bg-red-500 text-white"; // Seient seleccionat
+    return "bg-green-500 text-white"; // Seient seleccionat
   }
 
   // Si no està seleccionat, comprovem l'estat del seient segons la BBDD
@@ -204,7 +204,7 @@ const getSeatClass = (seatId) => {
   // Si està disponible, diferencia per tipus
   return ticket.type === "vip"
     ? "bg-yellow-400 hover:bg-yellow-500"
-    : "bg-gray-200 hover:bg-red-400";
+    : "bg-gray-200 hover:bg-green-400";
 };
 
 

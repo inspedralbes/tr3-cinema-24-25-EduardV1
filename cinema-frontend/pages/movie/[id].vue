@@ -25,7 +25,7 @@
               <span class="font-semibold">Director:</span> {{ movie.director }}
             </p>
             <p>
-              <span class="font-semibold">Puntuació:</span> {{ movie.score }}/10
+              <span class="font-semibold">Puntuació:</span> {{ movie.score }}/10
             </p>
             <p><span class="font-semibold">Horari:</span> {{ movie.time }}</p>
             <p>
@@ -85,31 +85,6 @@
               </template>
             </div>
           </div>
-
-          <!-- <div class="max-w-lg mx-auto">
-          <div class="grid grid-cols-11 gap-1 mb-1">
-            <div class="w-5"></div>
-            <div v-for="col in 10" :key="col" class="w-5 text-center text-xs font-medium">
-              {{ col }}
-            </div>
-          </div>
-          <div class="grid grid-cols-11 gap-1">
-            <template v-for="row in rows" :key="row">
-              <div class="w-5 flex items-center justify-center text-xs font-medium">
-                {{ row }}
-              </div>
-              <template v-for="seat in 10" :key="`${row}${seat}`">
-                <button 
-                  :class="[ 'w-5 h-5 rounded transition-colors text-xs font-medium', selectedSeats.includes(`${row}${seat}`) ? 'bg-red-500 text-white' : 'bg-gray-200 hover:bg-red-400' ]"
-                  @click="toggleSeat(`${row}${seat}`)"
-                  :title="`${row}${seat}`"
-                >
-                  {{ row }}{{ seat }}
-                </button>
-              </template>
-            </template>
-          </div>
-        </div> -->
         </div>
 
         <div class="text-right mb-3">
@@ -158,10 +133,11 @@
           <p>Seients seleccionats: {{ reservedSeats.join(", ") }}</p>
           <p>Import total: {{ reservedTotal }}€</p>
         </div>
-        <button @click="closeSuccessModal"
-          class="px-4 py-2 text-sm bg-red-600 text-white rounded-md hover:bg-red-700">
-          Tancar
-        </button>
+        <div class="space-x-2">          
+          <button @click="closeSuccessModal" class="px-4 py-2 text-sm bg-red-600 text-white rounded-md hover:bg-red-700">
+            Tancar
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -170,6 +146,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
+import { jsPDF } from "jspdf";
+import QRCode from "qrcode";
 
 const route = useRoute();
 const movieId = route.params.id;
@@ -186,70 +164,146 @@ const rows = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
 const booking = ref({ name: "", email: "" });
 const tickets = ref([]);
 
+const generateQRCode = async (ticketData) => {
+  try {
+    const data = JSON.stringify(ticketData);
+    const qrDataUrl = await QRCode.toDataURL(data, {
+      width: 128,
+      margin: 1,
+      color: {
+        dark: '#000000',
+        light: '#ffffff'
+      }
+    });
+    return qrDataUrl;
+  } catch (err) {
+    console.error("Error generating QR code:", err);
+    return null;
+  }
+};
+
+const generateTicketsPDF = async () => {
+  const doc = new jsPDF({
+    orientation: 'landscape',
+    unit: 'mm',
+    format: 'a5'
+  });
+
+  for (let i = 0; i < reservedSeats.value.length; i++) {
+    const seat = reservedSeats.value[i];
+    if (i > 0) {
+      doc.addPage();
+    }
+
+    // Generate QR code for this ticket
+    const ticketData = {
+      movieTitle: movie.value.title,
+      seat: seat,
+      customer: booking.value.name,
+      showtime: movie.value.time,
+      room: movie.value.room || '1',
+      ticketId: `${movieId}-${seat}-${Date.now()}`
+    };
+    
+    const qrCodeDataUrl = await generateQRCode(ticketData);
+
+    // Background
+    doc.setFillColor(245, 245, 245);
+    doc.rect(0, 0, doc.internal.pageSize.getWidth(), doc.internal.pageSize.getHeight(), 'F');
+
+    // Header
+    doc.setFillColor(220, 38, 38);
+    doc.rect(0, 0, doc.internal.pageSize.getWidth(), 20, 'F');
+
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(24);
+    doc.text(movie.value.title, 10, 15);
+
+    // Ticket details
+    doc.setTextColor(0, 0, 0);
+
+    // Left column
+    doc.setFontSize(14);
+    doc.text('Seient:', 10, 40);
+    doc.setFontSize(18);
+    doc.text(seat, 10, 48);
+
+    doc.setFontSize(14);
+    doc.text('Client:', 10, 65);
+    doc.setFontSize(16);
+    doc.text(booking.value.name, 10, 73);
+
+    // Right column
+    doc.setFontSize(14);
+    doc.text('Horari:', 100, 40);
+    doc.setFontSize(16);
+    doc.text(movie.value.time, 100, 48);
+
+    doc.setFontSize(14);
+    doc.text('Sala:', 100, 65);
+    doc.setFontSize(16);
+    doc.text(movie.value.room || '1', 100, 73);
+
+    // Add QR Code
+    if (qrCodeDataUrl) {
+      doc.addImage(qrCodeDataUrl, 'PNG', 130, 30, 40, 40);
+    }
+
+    // Footer
+    doc.setFillColor(220, 38, 38);
+    doc.rect(0, doc.internal.pageSize.getHeight() - 20, doc.internal.pageSize.getWidth(), 20, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(12);
+    doc.text('Gràcies per escollir el nostre cinema!', 10, doc.internal.pageSize.getHeight() - 8);
+
+    // Decorative lines
+    doc.setDrawColor(220, 38, 38);
+    doc.setLineWidth(0.5);
+    doc.line(10, 55, 90, 55);
+    doc.line(100, 55, 180, 55);
+  }
+
+  return doc;
+};
+
+const downloadTickets = async () => {
+  const doc = await generateTicketsPDF();
+  const fileName = `entrades-${movie.value.title.toLowerCase().replace(/\s+/g, '-')}.pdf`;
+  doc.save(fileName);
+};
+
 const closeSuccessModal = () => {
-  showSuccessModal.value = false; // Cierra el modal
-  window.location.reload(); // Recarga la página
+  downloadTickets();
+  
+  setTimeout(() => {
+    showSuccessModal.value = false;
+    window.location.href ="/";
+  }, 2000);
 };
 
 const getSeatClass = (seatId) => {
-  // Si el seient està seleccionat, retornem la classe de "seleccionat"
   if (selectedSeats.value.includes(seatId)) {
-    return "bg-green-500 text-white"; // Seient seleccionat
+    return "bg-green-500 text-white";
   }
 
-  // Si no està seleccionat, comprovem l'estat del seient segons la BBDD
   const ticket = tickets.value.find((ticket) => ticket.position === seatId);
-  if (!ticket) return "bg-gray-200"; // Si no trobem informació, assumeix-lo disponible
-  if (!ticket.available) return "bg-gray-500"; // Si no està disponible, es mostra com a ocupat
-  // Si està disponible, diferencia per tipus
+  if (!ticket) return "bg-gray-200";
+  if (!ticket.available) return "bg-gray-500";
   return ticket.type === "vip"
     ? "bg-yellow-400 hover:bg-yellow-500"
     : "bg-gray-200 hover:bg-green-400";
 };
 
-
-// Asegura't que el preu sigui un número (si ve com string, el convertim a número)
 const calculateTotal = () => {
   return selectedSeats.value.reduce((total, seatId) => {
     const ticket = tickets.value.find((ticket) => ticket.position === seatId);
-    // Converteix el preu a número si és una cadena
     return total + (ticket ? Number(ticket.price) : 0);
-  }, 0); // Inicialitzem el total a 0
+  }, 0);
 };
-
-// const buytickets = async (tickets) => {
-//   try {
-//     const response = await fetch("http://localhost:8000/api/buytickets", {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json", "Accept": "application/json" },
-//       body: JSON.stringify({
-//         movie_id: movieId,
-//         seats: selectedSeats.value,
-//         customer: booking.value,
-//       }),
-//     });
-
-//     const data = await response.json();
-
-//     if (response.ok) {
-//       alert("Compra realitzada corectament!");
-//       showBookingModal.value = false;
-//       showSuccessModal.value = true;
-//       await fetchTickets();
-//       selectedSeats.value = [];
-//       booking.value = { name: "", email: "" };
-//     } else {
-//       alert(data.message || "Error en realitzar la compra.");
-//     }
-//   } catch (error) {
-//     console.error("Error en la compra:", error);
-//     alert("Hi ha hagut un error en processar la reserva");
-//   }
-// };
 
 const isSeatOccupied = (seatId) => {
   const ticket = tickets.value.find((ticket) => ticket.position === seatId);
-  return ticket && !ticket.available; // Retorna true si està ocupat
+  return ticket && !ticket.available;
 };
 
 const fetchMovie = async () => {
@@ -264,6 +318,7 @@ const fetchMovie = async () => {
     loading.value = false;
   }
 };
+
 const fetchTickets = async () => {
   try {
     const res = await fetch(
@@ -275,6 +330,7 @@ const fetchTickets = async () => {
     console.error(err);
   }
 };
+
 onMounted(() => {
   fetchMovie();
   fetchTickets();
@@ -282,25 +338,21 @@ onMounted(() => {
 
 const toggleSeat = (seatId) => {
   const ticket = tickets.value.find((ticket) => ticket.position === seatId);
-  if (!ticket || !ticket.available) return; // No permet seleccionar si el seient no està disponible
+  if (!ticket || !ticket.available) return;
 
   const index = selectedSeats.value.indexOf(seatId);
   if (index === -1) {
-    // Si el seient no està seleccionat, comprova si ja hi ha 10 seleccionats
     if (selectedSeats.value.length >= 10) {
       alert("Només es poden seleccionar màxim 10 seients.");
       return;
     }
     selectedSeats.value.push(seatId);
   } else {
-    // Si ja està seleccionat, el deselecciona
     selectedSeats.value.splice(index, 1);
   }
 };
 
-
 const submitBooking = async () => {
-  // Comprova si s'han seleccionat seients
   if (selectedSeats.value.length === 0) {
     alert("Si us plau, selecciona almenys un seient.");
     return;
@@ -312,15 +364,13 @@ const submitBooking = async () => {
       headers: { "Content-Type": "application/json", "Accept": "application/json" },
       body: JSON.stringify({
         movie_session_id: movieId,
-        seats: selectedSeats.value, // Seients seleccionats
-        // customer: booking.value,
+        seats: selectedSeats.value,
       }),
     });
 
-    if (!res.ok){
+    if (!res.ok) {
       const errorData = await res.json();
       throw new Error("Error en processar la reserva");
-
     }    
     
     reservedSeats.value = [...selectedSeats.value];
@@ -328,7 +378,6 @@ const submitBooking = async () => {
 
     showBookingModal.value = false;
     showSuccessModal.value = true;
-    // Restableix el formulari i els seients seleccionats després de la compra
     selectedSeats.value = [];
     booking.value = { name: "", email: "" };
   } catch (err) {
@@ -336,5 +385,4 @@ const submitBooking = async () => {
     alert("No s'ha pogut processar la reserva.");
   }
 };
-
 </script>

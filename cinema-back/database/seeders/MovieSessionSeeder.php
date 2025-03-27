@@ -25,6 +25,5 @@ class MovieSessionSeeder extends Seeder
             'total_seats' => 120,
             'vip_seats' => 10,
         ]);
-        $this->command->info('✔️ Sessions de les pelicules inserides correctament!');
     }
 }

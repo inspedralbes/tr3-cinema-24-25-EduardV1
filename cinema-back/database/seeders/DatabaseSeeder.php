@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Database\Seeders\UserSeeder;  // 👈 Importa cada Seeder que facis servir!
+use Database\Seeders\UserSeeder;  
 use Database\Seeders\MovieSeeder;
 use Database\Seeders\MovieSessionSeeder;
 use Database\Seeders\TicketSeeder;
@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             TicketSeeder::class,
         ]);
 
-        $this->command->info('🎉 Base de dades poblada correctament!');
+        $this->command->info('Base de datos actualizada correctamente!');
     }
 }
 

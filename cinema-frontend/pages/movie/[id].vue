@@ -1,40 +1,31 @@
 <template>
   <div class="max-w-5xl mx-auto px-4 py-6">
-    <div v-if="loading" class="text-center">Carregant...</div>
-    <div v-else-if="error" class="text-center text-red-500">
-      Error en carregar la pel·lícula
-    </div>
-    <div v-else-if="movie" class="bg-white rounded-lg shadow-lg overflow-hidden">
+    <div v-if="loading" class="text-center text-gray-400">Carregant...</div>
+    <div v-else-if="error" class="text-center text-red-500">Error en carregar la pel·lícula</div>
+
+    <div v-else-if="movie" class="bg-black text-white rounded-lg overflow-hidden">
       <div class="md:flex">
         <div class="md:w-1/3">
           <img :src="movie.poster_url" :alt="movie.title" class="w-full h-full object-cover" />
         </div>
+
         <div class="p-6 md:w-2/3">
-          <h1 class="text-2xl font-bold mb-3">{{ movie.title }}</h1>
-          <p class="text-gray-600 mb-4">{{ movie.description }}</p>
-          <div class="space-y-2 mb-6">
+          <h1 class="text-3xl font-bold mb-4">{{ movie.title }}</h1>
+          <p class="text-gray-400 mb-6">{{ movie.description }}</p>
+
+          <div class="space-y-4 mb-8">
+            <p><span class="text-red-600">Durada:</span> {{ movie.duration }} min</p>
+            <p><span class="text-red-600">Classificació:</span> {{ movie.rating }}</p>
+            <p><span class="text-red-600">Director:</span> {{ movie.director }}</p>
+            <p><span class="text-red-600">Puntuació:</span> {{ movie.score }}/10</p>
+            <p><span class="text-red-600">Horari:</span> {{ movie.time }}</p>
             <p>
-              <span class="font-semibold">Durada:</span>
-              {{ movie.duration }} min
-            </p>
-            <p>
-              <span class="font-semibold">Classificació:</span>
-              {{ movie.rating }}
-            </p>
-            <p>
-              <span class="font-semibold">Director:</span> {{ movie.director }}
-            </p>
-            <p>
-              <span class="font-semibold">Puntuació:</span> {{ movie.score }}/10
-            </p>
-            <p><span class="font-semibold">Horari:</span> {{ movie.time }}</p>
-            <p>
-              <span class="font-semibold">Trailer:</span>
-              <a :href="movie.trailer_url" target="_blank" class="text-blue-600 hover:underline">Veure Trailer</a>
+              <span class="text-red-600">Trailer:</span>
+              <a :href="movie.trailer_url" target="_blank" class="text-red-500 hover:underline">Veure Trailer</a>
             </p>
           </div>
-          <button @click="showBookingModal = true"
-            class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors">
+
+          <button @click="showBookingModal = true" class="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors">
             Reservar Entrades
           </button>
         </div>
@@ -42,106 +33,70 @@
     </div>
 
     <!-- Booking Modal -->
-    <div v-if="showBookingModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div class="bg-white rounded-lg p-4 max-w-md w-full">
-        <h2 class="text-lg font-bold mb-4">Reservar Entrades</h2>
+    <div v-if="showBookingModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50">
+      <div class="bg-gray-900 text-white rounded-lg p-6 max-w-md w-full">
+        <h2 class="text-2xl font-bold mb-6">Reservar Entrades</h2>
 
         <!-- Selecció de Seients -->
-        <div class="mb-4">
-          <h3 class="text-sm font-semibold mb-2">Selecciona els seients</h3>
-          <div class="flex items-center space-x-3 text-xs mb-3">
-            <div class="flex items-center">
-              <div class="w-4 h-4 bg-gray-200 rounded mr-1"></div>
-              <span>Disponible</span>
-            </div>
-            <div class="flex items-center">
-              <div class="w-4 h-4 bg-green-500 rounded mr-1"></div>
-              <span>Seleccionat</span>
-            </div>
-            <div class="flex items-center">
-              <div class="w-4 h-4 bg-gray-500 rounded mr-1"></div>
-              <span>Ocupat</span>
-            </div>
+        <div class="mb-6">
+          <h3 class="text-lg font-semibold mb-4">Selecciona els seients</h3>
+
+          <div class="flex items-center space-x-4 mb-6 text-sm">
+            <div class="flex items-center"><div class="w-5 h-5 bg-gray-700 rounded mr-2"></div><span>Disponible</span></div>
+            <div class="flex items-center"><div class="w-5 h-5 bg-red-600 rounded mr-2"></div><span>Seleccionat</span></div>
+            <div class="flex items-center"><div class="w-5 h-5 bg-gray-500 rounded mr-2"></div><span>Ocupat</span></div>
           </div>
 
-          <div class="w-full bg-gray-800 text-white text-center py-1 rounded mb-4 text-xs">
-            Pantalla
-          </div>
-          <div class="max-w-lg mx-auto">
-            <div class="grid grid-cols-11 gap-1">
-              <template v-for="row in rows" :key="row">
-                <div class="w-5 flex items-center justify-center text-xs font-medium">
-                  {{ row }}
-                </div>
-                <template v-for="seat in 10" :key="`${row}${seat}`">
-                  <button :class="[
-                    'w-5 h-5 rounded transition-colors text-xs font-medium',
-                    getSeatClass(`${row}${seat}`),
-                  ]" @click="toggleSeat(`${row}${seat}`)" :title="`${row}${seat}`"
-                    :disabled="isSeatOccupied(`${row}${seat}`)">
-                    {{ row }}{{ seat }}
-                  </button>
-                </template>
+          <div class="w-full bg-gray-800 text-white text-center py-1 rounded mb-4 text-xs">Pantalla</div>
+
+          <div class="grid grid-cols-11 gap-2">
+            <template v-for="row in rows" :key="row">
+              <div class="flex items-center justify-center text-xs font-medium text-gray-400">{{ row }}</div>
+              <template v-for="seat in 10" :key="`${row}${seat}`">
+                <button :class="[ 'w-6 h-6 rounded text-xs flex items-center justify-center', getSeatClass(`${row}${seat}`) ]" @click="toggleSeat(`${row}${seat}`)" :title="`${row}${seat}`" :disabled="isSeatOccupied(`${row}${seat}`)">{{ seat }}</button>
               </template>
-            </div>
+            </template>
           </div>
         </div>
 
-        <div class="text-right mb-3">
-          <p class="text-xs font-semibold">
-            Seients seleccionats: {{ selectedSeats.join(", ") }}
-          </p>
-          <p class="text-xs font-semibold">Total: {{ calculateTotal() }}€</p>
+        <div class="text-right mb-6">
+          <p class="text-sm">Seients seleccionats: {{ selectedSeats.join(", ") }}</p>
+          <p class="text-sm">Total: {{ calculateTotal() }}€</p>
         </div>
 
         <!-- Formulari de Detalls del Client -->
-        <form @submit.prevent="submitBooking" class="space-y-3">
+        <form @submit.prevent="submitBooking" class="space-y-4">
           <div>
-            <label class="block text-xs font-medium text-gray-700">Nom</label>
-            <input type="text" v-model="booking.name" required
-              class="mt-1 block w-full text-xs rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring focus:ring-red-200" />
+            <label class="block text-sm">Nom</label>
+            <input type="text" v-model="booking.name" required class="w-full bg-gray-800 text-white px-4 py-2 rounded-lg focus:ring-red-600" />
           </div>
           <div>
-            <label class="block text-xs font-medium text-gray-700">Correu electrònic</label>
-            <input type="email" v-model="booking.email" required
-              class="mt-1 block w-full text-xs rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring focus:ring-red-200" />
+            <label class="block text-sm">Correu electrònic</label>
+            <input type="email" v-model="booking.email" required class="w-full bg-gray-800 text-white px-4 py-2 rounded-lg focus:ring-red-600" />
           </div>
-          <div class="flex justify-end space-x-2">
-            <button type="button" @click="showBookingModal = false"
-              class="px-3 py-1 text-xs border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
-              Cancel·lar
-            </button>
-            <button type="submit"
-              class="px-3 py-1 text-xs bg-red-600 text-white rounded-md hover:bg-red-700">
-              Confirma la Reserva
-            </button>
+
+          <div class="flex justify-end space-x-4">
+            <button type="button" @click="showBookingModal = false" class="bg-gray-700 px-4 py-2 rounded-lg hover:bg-gray-600">Cancel·lar</button>
+            <button type="submit" class="bg-red-600 px-4 py-2 rounded-lg hover:bg-red-700">Confirma la Reserva</button>
           </div>
         </form>
       </div>
     </div>
 
     <!-- Success Modal -->
-    <div v-if="showSuccessModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div class="bg-white rounded-lg p-6 max-w-md w-full text-center">
-        <div class="text-green-500 text-4xl mb-3">✓</div>
-        <h2 class="text-xl font-bold mb-2">Reserva Confirmada!</h2>
-        <p class="text-gray-600 mb-4 text-sm">
-          La teva reserva s'ha realitzat correctament. Rebràs un correu de confirmació.
-        </p>
-        <div class="mb-4 text-sm">
-          <h3 class="font-semibold mb-2">Detalls de la reserva:</h3>
-          <p>Seients seleccionats: {{ reservedSeats.join(", ") }}</p>
-          <p>Import total: {{ reservedTotal }}€</p>
-        </div>
-        <div class="space-x-2">          
-          <button @click="closeSuccessModal" class="px-4 py-2 text-sm bg-red-600 text-white rounded-md hover:bg-red-700">
-            Tancar
-          </button>
-        </div>
+    <div v-if="showSuccessModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50">
+      <div class="bg-gray-900 text-white rounded-lg p-8 max-w-md w-full text-center">
+        <div class="text-green-500 text-4xl mb-4">✓</div>
+        <h2 class="text-2xl font-bold mb-4">Reserva Confirmada!</h2>
+        <p class="mb-6">La teva reserva s'ha realitzat correctament. Rebràs un correu de confirmació.</p>
+        <p class="mb-4">Seients: {{ reservedSeats.join(", ") }}</p>
+        <p class="mb-6">Total: {{ reservedTotal }}€</p>
+        <button @click="closeSuccessModal" class="bg-red-600 px-6 py-3 rounded-lg hover:bg-red-700">Tancar</button>
       </div>
     </div>
   </div>
 </template>
+
 
 <script setup>
 import { ref, onMounted } from "vue";

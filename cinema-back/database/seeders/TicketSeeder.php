@@ -46,6 +46,5 @@ class TicketSeeder extends Seeder
             }
         }
 
-        $this->command->info('✔️ Tickets de les pel·lícules inserides correctament!');
     }
 }

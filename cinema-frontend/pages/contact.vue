@@ -111,7 +111,7 @@
               </div>
               <div>
                 <h3 class="font-semibold">Correu electrònic</h3>
-                <p class="text-gray-600">info@MoviieTick.com</p>
+                <p class="text-gray-600">info@CinemaPedralbes.com</p>
               </div>
             </div>
             <div class="flex items-start space-x-4">

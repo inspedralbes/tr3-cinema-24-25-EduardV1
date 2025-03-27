@@ -4,10 +4,17 @@
     <div v-else-if="error" class="text-center text-red-500">
       Error en carregar la pel·lícula
     </div>
-    <div v-else-if="movie" class="bg-white rounded-lg shadow-lg overflow-hidden">
+    <div
+      v-else-if="movie"
+      class="bg-white rounded-lg shadow-lg overflow-hidden"
+    >
       <div class="md:flex">
         <div class="md:w-1/3">
-          <img :src="movie.poster_url" :alt="movie.title" class="w-full h-full object-cover" />
+          <img
+            :src="movie.poster_url"
+            :alt="movie.title"
+            class="w-full h-full object-cover"
+          />
         </div>
         <div class="p-6 md:w-2/3">
           <h1 class="text-2xl font-bold mb-3">{{ movie.title }}</h1>
@@ -30,11 +37,18 @@
             <p><span class="font-semibold">Horari:</span> {{ movie.time }}</p>
             <p>
               <span class="font-semibold">Trailer:</span>
-              <a :href="movie.trailer_url" target="_blank" class="text-blue-600 hover:underline">Veure Trailer</a>
+              <a
+                :href="movie.trailer_url"
+                target="_blank"
+                class="text-blue-600 hover:underline"
+                >Veure Trailer</a
+              >
             </p>
           </div>
-          <button @click="showBookingModal = true"
-            class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors">
+          <button
+            @click="showBookingModal = true"
+            class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors"
+          >
             Reservar Entrades
           </button>
         </div>
@@ -42,7 +56,10 @@
     </div>
 
     <!-- Booking Modal -->
-    <div v-if="showBookingModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div
+      v-if="showBookingModal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+    >
       <div class="bg-white rounded-lg p-4 max-w-md w-full">
         <h2 class="text-lg font-bold mb-4">Reservar Entrades</h2>
 
@@ -64,21 +81,29 @@
             </div>
           </div>
 
-          <div class="w-full bg-gray-800 text-white text-center py-1 rounded mb-4 text-xs">
+          <div
+            class="w-full bg-gray-800 text-white text-center py-1 rounded mb-4 text-xs"
+          >
             Pantalla
           </div>
           <div class="max-w-lg mx-auto">
             <div class="grid grid-cols-11 gap-1">
               <template v-for="row in rows" :key="row">
-                <div class="w-5 flex items-center justify-center text-xs font-medium">
+                <div
+                  class="w-5 flex items-center justify-center text-xs font-medium"
+                >
                   {{ row }}
                 </div>
                 <template v-for="seat in 10" :key="`${row}${seat}`">
-                  <button :class="[
-                    'w-5 h-5 rounded transition-colors text-xs font-medium',
-                    getSeatClass(`${row}${seat}`),
-                  ]" @click="toggleSeat(`${row}${seat}`)" :title="`${row}${seat}`"
-                    :disabled="isSeatOccupied(`${row}${seat}`)">
+                  <button
+                    :class="[
+                      'w-5 h-5 rounded transition-colors text-xs font-medium',
+                      getSeatClass(`${row}${seat}`),
+                    ]"
+                    @click="toggleSeat(`${row}${seat}`)"
+                    :title="`${row}${seat}`"
+                    :disabled="isSeatOccupied(`${row}${seat}`)"
+                  >
                     {{ row }}{{ seat }}
                   </button>
                 </template>
@@ -98,21 +123,36 @@
         <form @submit.prevent="submitBooking" class="space-y-3">
           <div>
             <label class="block text-xs font-medium text-gray-700">Nom</label>
-            <input type="text" v-model="booking.name" required
-              class="mt-1 block w-full text-xs rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring focus:ring-red-200" />
+            <input
+              type="text"
+              v-model="booking.name"
+              required
+              class="mt-1 block w-full text-xs rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring focus:ring-red-200"
+            />
           </div>
           <div>
-            <label class="block text-xs font-medium text-gray-700">Correu electrònic</label>
-            <input type="email" v-model="booking.email" required
-              class="mt-1 block w-full text-xs rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring focus:ring-red-200" />
+            <label class="block text-xs font-medium text-gray-700"
+              >Correu electrònic</label
+            >
+            <input
+              type="email"
+              v-model="booking.email"
+              required
+              class="mt-1 block w-full text-xs rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring focus:ring-red-200"
+            />
           </div>
           <div class="flex justify-end space-x-2">
-            <button type="button" @click="showBookingModal = false"
-              class="px-3 py-1 text-xs border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
+            <button
+              type="button"
+              @click="showBookingModal = false"
+              class="px-3 py-1 text-xs border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+            >
               Cancel·lar
             </button>
-            <button type="submit"
-              class="px-3 py-1 text-xs bg-red-600 text-white rounded-md hover:bg-red-700">
+            <button
+              type="submit"
+              class="px-3 py-1 text-xs bg-red-600 text-white rounded-md hover:bg-red-700"
+            >
               Confirma la Reserva
             </button>
           </div>
@@ -121,20 +161,27 @@
     </div>
 
     <!-- Success Modal -->
-    <div v-if="showSuccessModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div
+      v-if="showSuccessModal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+    >
       <div class="bg-white rounded-lg p-6 max-w-md w-full text-center">
         <div class="text-green-500 text-4xl mb-3">✓</div>
         <h2 class="text-xl font-bold mb-2">Reserva Confirmada!</h2>
         <p class="text-gray-600 mb-4 text-sm">
-          La teva reserva s'ha realitzat correctament. Rebràs un correu de confirmació.
+          La teva reserva s'ha realitzat correctament. Rebràs un correu de
+          confirmació.
         </p>
         <div class="mb-4 text-sm">
           <h3 class="font-semibold mb-2">Detalls de la reserva:</h3>
           <p>Seients seleccionats: {{ reservedSeats.join(", ") }}</p>
           <p>Import total: {{ reservedTotal }}€</p>
         </div>
-        <div class="space-x-2">          
-          <button @click="closeSuccessModal" class="px-4 py-2 text-sm bg-red-600 text-white rounded-md hover:bg-red-700">
+        <div class="space-x-2">
+          <button
+            @click="closeSuccessModal"
+            class="px-4 py-2 text-sm bg-red-600 text-white rounded-md hover:bg-red-700"
+          >
             Tancar
           </button>
         </div>
@@ -171,9 +218,9 @@ const generateQRCode = async (ticketData) => {
       width: 128,
       margin: 1,
       color: {
-        dark: '#000000',
-        light: '#ffffff'
-      }
+        dark: "#000000",
+        light: "#ffffff",
+      },
     });
     return qrDataUrl;
   } catch (err) {
@@ -184,9 +231,9 @@ const generateQRCode = async (ticketData) => {
 
 const generateTicketsPDF = async () => {
   const doc = new jsPDF({
-    orientation: 'landscape',
-    unit: 'mm',
-    format: 'a5'
+    orientation: "landscape",
+    unit: "mm",
+    format: "a5",
   });
 
   for (let i = 0; i < reservedSeats.value.length; i++) {
@@ -201,19 +248,25 @@ const generateTicketsPDF = async () => {
       seat: seat,
       customer: booking.value.name,
       showtime: movie.value.time,
-      room: movie.value.room || '1',
-      ticketId: `${movieId}-${seat}-${Date.now()}`
+      room: movie.value.room || "1",
+      ticketId: `${movieId}-${seat}-${Date.now()}`,
     };
-    
+
     const qrCodeDataUrl = await generateQRCode(ticketData);
 
     // Background
     doc.setFillColor(245, 245, 245);
-    doc.rect(0, 0, doc.internal.pageSize.getWidth(), doc.internal.pageSize.getHeight(), 'F');
+    doc.rect(
+      0,
+      0,
+      doc.internal.pageSize.getWidth(),
+      doc.internal.pageSize.getHeight(),
+      "F"
+    );
 
     // Header
     doc.setFillColor(220, 38, 38);
-    doc.rect(0, 0, doc.internal.pageSize.getWidth(), 20, 'F');
+    doc.rect(0, 0, doc.internal.pageSize.getWidth(), 20, "F");
 
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(24);
@@ -224,37 +277,47 @@ const generateTicketsPDF = async () => {
 
     // Left column
     doc.setFontSize(14);
-    doc.text('Seient:', 10, 40);
+    doc.text("Seient:", 10, 40);
     doc.setFontSize(18);
     doc.text(seat, 10, 48);
 
     doc.setFontSize(14);
-    doc.text('Client:', 10, 65);
+    doc.text("Client:", 10, 65);
     doc.setFontSize(16);
     doc.text(booking.value.name, 10, 73);
 
     // Right column
     doc.setFontSize(14);
-    doc.text('Horari:', 100, 40);
+    doc.text("Horari:", 100, 40);
     doc.setFontSize(16);
     doc.text(movie.value.time, 100, 48);
 
     doc.setFontSize(14);
-    doc.text('Sala:', 100, 65);
+    doc.text("Sala:", 100, 65);
     doc.setFontSize(16);
-    doc.text(movie.value.room || '1', 100, 73);
+    doc.text(movie.value.room || "1", 100, 73);
 
     // Add QR Code
     if (qrCodeDataUrl) {
-      doc.addImage(qrCodeDataUrl, 'PNG', 130, 30, 40, 40);
+      doc.addImage(qrCodeDataUrl, "PNG", 130, 30, 40, 40);
     }
 
     // Footer
     doc.setFillColor(220, 38, 38);
-    doc.rect(0, doc.internal.pageSize.getHeight() - 20, doc.internal.pageSize.getWidth(), 20, 'F');
+    doc.rect(
+      0,
+      doc.internal.pageSize.getHeight() - 20,
+      doc.internal.pageSize.getWidth(),
+      20,
+      "F"
+    );
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(12);
-    doc.text('Gràcies per escollir el nostre cinema!', 10, doc.internal.pageSize.getHeight() - 8);
+    doc.text(
+      "Gràcies per escollir el nostre cinema!",
+      10,
+      doc.internal.pageSize.getHeight() - 8
+    );
 
     // Decorative lines
     doc.setDrawColor(220, 38, 38);
@@ -268,16 +331,18 @@ const generateTicketsPDF = async () => {
 
 const downloadTickets = async () => {
   const doc = await generateTicketsPDF();
-  const fileName = `entrades-${movie.value.title.toLowerCase().replace(/\s+/g, '-')}.pdf`;
+  const fileName = `entrades-${movie.value.title
+    .toLowerCase()
+    .replace(/\s+/g, "-")}.pdf`;
   doc.save(fileName);
 };
 
 const closeSuccessModal = () => {
   downloadTickets();
-  
+
   setTimeout(() => {
     showSuccessModal.value = false;
-    window.location.href ="/";
+    window.location.href = "/";
   }, 2000);
 };
 
@@ -308,7 +373,9 @@ const isSeatOccupied = (seatId) => {
 
 const fetchMovie = async () => {
   try {
-    const res = await fetch(`http://localhost:8000/api/movies/${movieId}`);
+    const res = await fetch(
+      `http://moviietickback.daw.inspedralbes.cat/public/api/movies/${movieId}`
+    );
     if (!res.ok) throw new Error("Error en carregar la pel·lícula");
     movie.value = await res.json();
   } catch (err) {
@@ -322,7 +389,7 @@ const fetchMovie = async () => {
 const fetchTickets = async () => {
   try {
     const res = await fetch(
-      `http://localhost:8000/api/movie_sessions/${movieId}/tickets`
+      `http://moviietickback.daw.inspedralbes.cat/public/api/movie_sessions/${movieId}/tickets`
     );
     if (!res.ok) throw new Error("Error en carregar les entrades");
     tickets.value = await res.json();
@@ -359,20 +426,26 @@ const submitBooking = async () => {
   }
 
   try {
-    const res = await fetch("http://localhost:8000/api/buytickets", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify({
-        movie_session_id: movieId,
-        seats: selectedSeats.value,
-      }),
-    });
+    const res = await fetch(
+      "http://moviietickback.daw.inspedralbes.cat/public/api/buytickets",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          movie_session_id: movieId,
+          seats: selectedSeats.value,
+        }),
+      }
+    );
 
     if (!res.ok) {
       const errorData = await res.json();
       throw new Error("Error en processar la reserva");
-    }    
-    
+    }
+
     reservedSeats.value = [...selectedSeats.value];
     reservedTotal.value = calculateTotal();
 

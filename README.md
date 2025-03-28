@@ -25,4 +25,4 @@ Aquest projecte segueix l'estructura mínima de carpetes per a projectes transve
 
 ---
 
-📅 *Aquest README s'ha d'actualitzar a mesura que el projecte avanci.*
+

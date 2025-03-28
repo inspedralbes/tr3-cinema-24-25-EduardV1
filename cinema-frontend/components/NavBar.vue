@@ -8,7 +8,6 @@
         <div class="flex space-x-4">
           <NuxtLink to="/" class="hover:text-gray-300">Inici</NuxtLink>
           <NuxtLink to="/movies" class="hover:text-gray-300">Pel·lícules</NuxtLink>
-          <NuxtLink to="/admin" class="hover:text-gray-300">Administració</NuxtLink>
         </div>
       </div>
     </div>

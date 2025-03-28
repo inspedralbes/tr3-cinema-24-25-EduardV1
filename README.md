@@ -1,16 +1,28 @@
-# transversals
-Esquema mínim de carpetes pels projectes transversals
+# 🎞 MoviieTick
 
-És obligatori seguir aquesta estructura tot i que la podeu ampliar.
+## Descripció  
+**MoviieTick** és una aplicació web per a la gestió d'entrades de cinema. Permet als usuaris comprar entrades, gestionar reserves i consultar la cartellera de manera fàcil i intuïtiva.
 
-## Atenció
-Un cop comenceu heu de canviar aquesta explicació amb la corresponent al vostre projecte (utilitzant markdown)
+## Integrants  
+- **Eduard Vilaseca Vilà**  
 
-# Aquest fitxer ha de contenir com a mínim:
- * Nom dels integrants
- * Nom del projecte
- * Petita descripció
- * Adreça del gestor de tasques (taiga, jira, trello...)
- * Adreça del prototip gràfic del projecte (Penpot, figma, moqups...)
- * URL de producció (quan la tingueu)
- * Estat: (explicació d'en quin punt està)
+## Estructura del Projecte  
+Aquest projecte segueix l'estructura mínima de carpetes per a projectes transversals. L'estructura es pot ampliar segons les necessitats.
+
+## Recursos del Projecte  
+
+- 📌 **Gestor de tasques (Taiga):**  
+  [Taiga - MoviieTick](https://tree.taiga.io/project/eduardv1-transversal-cinema/timeline)  
+
+- 🎨 **Prototip gràfic (Figma, Penpot, Moqups...):**  
+  *(Afegiu aquí l'enllaç al prototip gràfic)*  
+
+- 🌐 **URL de producció:**  
+  [MoviieTick - Web Oficial](http://moviietick.daw.inspedralbes.cat/)  
+
+## Estat del Projecte  
+📌 **En procés:** Implementant el sistema de pagament per a les entrades.
+
+---
+
+

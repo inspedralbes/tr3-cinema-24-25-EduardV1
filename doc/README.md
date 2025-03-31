@@ -85,9 +85,6 @@
 ### 📩 Generació de PDF amb codi QR
 - **GET** `/api/tickets/{id}/download` → Descarregar l’entrada en PDF.
 
-## 📱 Aplicació Android (si aplicable)
-*(Explicar si hi ha una versió per a mòbils o compatibilitat amb PWA.)*
-
 ## 🔍 Altres elements importants
 - Gestió d’autenticació amb Laravel Sanctum.
 - Validacions en backend per evitar duplicitat de reserves.

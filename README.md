@@ -14,9 +14,6 @@ Aquest projecte segueix l'estructura mínima de carpetes per a projectes transve
 - 📌 **Gestor de tasques (Taiga):**  
   [Taiga - MoviieTick](https://tree.taiga.io/project/eduardv1-transversal-cinema/timeline)  
 
-- 🎨 **Prototip gràfic (Figma, Penpot, Moqups...):**  
-  *(Afegiu aquí l'enllaç al prototip gràfic)*  
-
 - 🌐 **URL de producció:**  
   [MoviieTick - Web Oficial](http://moviietick.daw.inspedralbes.cat/)  
 
